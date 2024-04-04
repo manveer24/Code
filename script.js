@@ -10,6 +10,21 @@ let formStepsNum = 0;
 
 nextBtns.forEach((btn) => {
   btn.addEventListener("click", () => {
+    if (formStepsNum === 0) {
+      // Validate program selection
+      const programSelect = document.getElementById("subjects");
+      if (programSelect.value === "") {
+        alert("Please select a program");
+        return;
+      }
+    } else if (formStepsNum === 1) {
+      // Validate subject selection
+      const subjectSelect = document.getElementById("subjects");
+      if (subjectSelect.value === "") {
+        alert("Please select a subject");
+        return;
+      }
+    }
     formStepsNum++;
     updateFormSteps();
     updateProgressbar();
@@ -18,7 +33,7 @@ nextBtns.forEach((btn) => {
 
 Checkout.forEach((btn) => {
   btn.addEventListener("click", () => {
-    formStepsNum+=2;
+    formStepsNum++;
     updateFormSteps();
     updateProgressbar();
   });
@@ -31,6 +46,7 @@ prevBtns.forEach((btn) => {
     updateProgressbar();
   });
 });
+
 addBtns.forEach((btn) => {
   btn.addEventListener("click", () => {
     formStepsNum--;
@@ -62,3 +78,10 @@ function updateProgressbar() {
   progress.style.width =
     ((progressActive.length - 1) / (progressSteps.length - 1)) * 100 + "%";
 }
+
+// Update total price when program selection changes
+document.getElementById("subjects").addEventListener("change", function () {
+  const selectedOption = this.options[this.selectedIndex];
+  const price = parseFloat(selectedOption.getAttribute("data-price"));
+  document.getElementById("total-price").textContent = price;
+});
