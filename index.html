@@ -1,125 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+    <script src="Payment.js"></script>
+    <title>Registration</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="style.css" />
-  <script src="script.js" defer></script>
-  <title>Registraion</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
-</head>
+  <body>
+    <form action="database.php" method="post" class="form">
+      <h1 class="text-center">Registration</h1>
+      <!-- Progress bar -->
+      <div class="progressbar">
+        <div class="progress" id="progress"></div>
 
-<body>
-  <form action="#" class="form">
-    <h1 class="text-center">Registration</h1>
-    <!-- Progress bar -->
-    <div class="progressbar">
-      <div class="progress" id="progress"></div>
-
-      <div class="progress-step progress-step-active" data-title="Parent Detail"></div>
-      <div class="progress-step" data-title="Child Deatail"></div>
-      <div class="progress-step" data-title="Subject"></div>
-      <!-- <div class="progress-step" data-title="add-another-child"></div> -->
-      <div class="progress-step" data-title="Payment"></div>
-    </div>
-
-    <!-- Steps -->
-    <div class="form-step form-step-active">
-      <div class="input-group">
-        <label for="parentName" required>Parent Name</label>
-        <input type="text" name="parentName" id="parentName" />
+        <div
+          class="progress-step progress-step-active"
+          data-title="Parent Detail"
+        ></div>
+        <div class="progress-step" data-title="Child Detail"></div>
+        <div class="progress-step" data-title="Subject"></div>
+        <!-- <div class="progress-step" data-title="add-another-child"></div> -->
+        <div class="progress-step" data-title="Payment"></div>
       </div>
-      <div class="input-group">
-        <label for="email">Email</label>
-        <input type="text" name="email" id="email" />
-      </div>
-      <div class="">
-        <a href="#" class="btn btn-next width-50 ml-auto">Next</a>
-      </div>
-    </div>
 
-    <div class="form-step">
-      <div class="input-group">
-        <label for="childName">Child Name</label>
-        <input type="text" name="childName" id="childName" />
+      <!-- Steps -->
+      <div class="form-step form-step-active">
+        <div class="input-group">
+          <label for="parentName" required>Parent Name</label>
+          <input type="text" name="parentName" id="parentName" />
+        </div>
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input type="text" name="email" id="email" />
+        </div>
+        <div class="">
+          <a href="#" class="btn btn-next width-50 ml-auto">Next</a>
+        </div>
       </div>
-      <div class="btns-group">
-        <a href="#" class="btn btn-prev">Previous</a>
-        <a href="#" class="btn btn-next">Next</a>
+
+      <div class="form-step">
+        <div class="input-group">
+          <label for="childName">Child Name</label>
+          <input type="text" name="childName" id="childName" />
+        </div>
+        <div class="input-group">
+          <label for="dob">Date of Birth</label>
+          <input type="date" name="dob" id="dob" />
+        </div>
+        <div class="btns-group">
+          <a href="#" class="btn btn-prev">Previous</a>
+          <a href="#" class="btn btn-next">Next</a>
+        </div>
       </div>
-    </div>
 
-    <div class="form-step">
-      <div class="input-group">
-        <label for="subjects">Program's</label>
-        <select name="subjects" id="subjects">
-          <option value="Foundation" data-price="2100">Foundation</option>
-          <option value="Essentials" data-price="2100">Essentials</option>
-          <option value="Challenge_A" data-price="8300">Challenge A</option>
-          <option value="Challenge_B" data-price="8300">Challenge B</option>
-          <option value="Challenge_1" data-price="8300">Challenge 1</option>
-          <option value="Challenge_2" data-price="8300">Challenge 2</option>
-          <option value="Challenge_3" data-price="8300">Challenge 3</option>
-          <option value="Challenge_4" data-price="8300">Challenge 4</option>
+      <div class="form-step">
+        <div class="input-group">
+          <label for="subjects">Program's</label>
+          <select name="subjects" id="subjects">
+            <option value="Foundation" data-price="2100">Foundation</option>
+            <option value="Essentials" data-price="2100">Essentials</option>
+            <option value="Challenge_A" data-price="8300">Challenge A</option>
+            <option value="Challenge_B" data-price="8300">Challenge B</option>
+            <option value="Challenge_1" data-price="8300">Challenge 1</option>
+            <option value="Challenge_2" data-price="8300">Challenge 2</option>
+            <option value="Challenge_3" data-price="8300">Challenge 3</option>
+            <option value="Challenge_4" data-price="8300">Challenge 4</option>
+          </select>
+          <script>
+            // Update total price when program selection changes
+            document
+              .getElementById("subjects")
+              .addEventListener("change", function () {
+                const selectedOption = this.options[this.selectedIndex];
+                const price = parseFloat(
+                  selectedOption.getAttribute("data-price")
+                );
+                document.getElementById("total-price").textContent = price;
 
-        </select>
-        <p>Total Price: <span id="total-price">0</span>&#8377</p>
+                // Show the total price container once a program is selected
+                document.querySelector(".total-price-container").style.display =
+                  "block";
+              });
+          </script>
+          <!-- Add a CSS class to hide the total price initially -->
+          <p class="total-price-container" style="display: none">
+            Total Price: <span id="total-price">0</span>&#8377;
+          </p>
+        </div>
+        <div class="btns-group">
+          <a href="#" class="btn btn-prev">Previous</a>
+          <a href="#" class="btn btn-check">Checkout</a>
+          <a href="#" class="btn btn-adc">Add Child</a>
+        </div>
       </div>
-      <div class="btns-group">
-        <a href="#" class="btn btn-prev">Previous</a>
-        <a href="#" class="btn btn-check">Checkout</a>
-        <a href="#" class="btn btn-adc">Add Child</a>
+
+      <div class="form-step">
+        <!-- Display child details here -->
+        <div id="child-details"></div>
+        <p id="qr-message">Scan the QR code to make the payment.</p>
+        <div class="qr-code-container">
+          <canvas id="qr-code"></canvas>
+        </div>
+        <div class="btns-group">
+          <a href="#" class="btn btn-prev">Previous</a>
+          <input type="submit" value="Submit" class="btn" />
+        </div>
       </div>
-    </div>
-    <div class="form-step">
-      <!-- <p id="qr-message">Scan the QR code to make the payment.</p>
-      <div class="qr-code-container">
-        <canvas id="qr-code"></canvas>
-      </div>
-      <div class="btns-group">
-        <a href="#" class="btn btn-prev">Previous</a>
-        <input type="submit" value="Submit" class="btn" />
-      </div> -->
-      <p>hello</p>
-    </div>
+    </form>
+    <script src="Payment.js"></script>
 
-    <div class="form-step">
-      <!-- Display child details here -->
-      <div id="child-details"></div>
-      <p id="qr-message">Scan the QR code to make the payment.</p>
-      <div class="qr-code-container">
-        <canvas id="qr-code"></canvas>
-      </div>
-      <div class="btns-group">
-        <a href="#" class="btn btn-prev">Previous</a>
-        <input type="submit" value="Submit" class="btn" />
-      </div>
-    </div>
-
-
-  </form>
-  <script>
-    // Function to display child details on checkout
-    function displayChildDetails() {
-      let childDetailsHTML = '<p>Child Details:</p>';
-      children.forEach((child, index) => {
-        childDetailsHTML += `<p>Child ${index + 1}: ${child.name} - Program: ${child.program} - Total Price: ${child.totalPrice} INR</p>`;
-      });
-      document.getElementById("child-details").innerHTML = childDetailsHTML;
-    }
-
-    // Event listener for "Checkout" button
-    Checkout.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        // Display child details on checkout
-        displayChildDetails();
-      });
-    });
-
-  </script>
-  <script src="Payment.js"></script>
-</body>
-
+    <?php include 'database.php'; ?>
+  </body>
 </html>
